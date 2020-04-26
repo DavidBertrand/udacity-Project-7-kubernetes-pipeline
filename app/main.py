@@ -10,7 +10,7 @@ font = Figlet(font="starwars")
 def main():
     # get the message from the environmental variable $MESSAGE
     # or fall back to the string "no message specified"
-    message = os.getenv("MESSAGE", "hello from Docker")
+    message = os.getenv("MESSAGE", "no message specified")
 
     # render plain text nicely in HTML
     html_text = font.renderText(message)\
