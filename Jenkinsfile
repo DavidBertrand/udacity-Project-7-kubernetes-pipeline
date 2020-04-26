@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Lint app') {
               steps {
-                  //sh 'pylint --disable=R,C,W1203 app/**.py'
+                //sh 'pylint --disable=R,C,W1203 app/**.py'
                 jenkins run python
               }
         }
