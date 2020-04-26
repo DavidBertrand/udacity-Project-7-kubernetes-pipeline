@@ -10,11 +10,6 @@ pipeline {
                  '''
              }
          }
-         stage('Lint app') {
-              steps {
-                  sh 'pylint --disable=R,C,W1203 app/**.py'
-              }
-         }
          stage ("lint dockerfile") {
             agent {
                 docker {
@@ -30,5 +25,10 @@ pipeline {
                 }
             }
         }
-     }
+                 stage('Lint app') {
+              steps {
+                  sh 'pylint --disable=R,C,W1203 app/**.py'
+              }
+         }
+
 }
