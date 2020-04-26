@@ -1,7 +1,3 @@
-<<<<<<< HEAD
 Flask==1.0.0
-=======
-Flask==1.0
->>>>>>> ad83ce53648a298119179b49c5ef68b6ba0fdfa3
+pyfiglet==0.7.5
 pylint
-hadolint
