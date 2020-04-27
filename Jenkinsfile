@@ -43,22 +43,15 @@ pipeline {
         }
         stage('Build Docker image') {
             steps {
-                sh ''' . venv/bin/activate
-                    dockerpath="bertrand282/project7"
-                    # Build image and add a descriptive tag
+                sh ''' dockerpath="bertrand282/project7"
                     docker build --tag=$dockerpath .    
-                    # List docker images
-                    docker image ls
                     '''
             }
         }
         stage('Publish') {
             steps {
                 withDockerRegistry([ credentialsId: "bertrand282", url: "" ]) {
-                    sh '''. venv/bin/activate
-                    dockerpath="bertrand282/project7"
-                    docker push $dockerpath
-                    '''
+                    sh 'docker push bertrand282/project7'
                 }
             }
         }
