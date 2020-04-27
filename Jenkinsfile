@@ -20,7 +20,9 @@ pipeline {
         }
         stage('Lint app') {
             steps {
-                sh 'pylint --disable=R,C,W1203 app/**.py'
+                sh ''' . venv/bin/activate
+                    pylint --disable=R,C,W1203 app/**.py
+                '''
             }
         }
         stage ("lint dockerfile") {
@@ -41,7 +43,8 @@ pipeline {
         }
         stage('Build Docker image') {
             steps {
-                sh ''' dockerpath="bertrand282/project7"
+                sh ''' . venv/bin/activate
+                    dockerpath="bertrand282/project7"
                     # Build image and add a descriptive tag
                     docker build --tag=$dockerpath .    
                     # List docker images
