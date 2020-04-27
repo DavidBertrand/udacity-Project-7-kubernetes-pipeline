@@ -1,6 +1,13 @@
 pipeline {
      agent any
-     stages {        
+     stages {
+        stage('Build environment') {
+            steps {
+                sh '''ip install --upgrade pip &&\
+	                pip install -r requirements.txt
+                    '''
+            }
+        }
          stage ("lint dockerfile") {
             //https://github.com/hadolint/hadolint/blob/master/docs/INTEGRATION.md
             agent {
@@ -20,6 +27,7 @@ pipeline {
         stage('Lint app') {
               steps {
                 sh 'pylint --disable=R,C,W1203 app/**.py'
+
               }
         }
         stage('Build') {
