@@ -1,6 +1,14 @@
 pipeline {
      agent any
      stages {
+        stage('Build environment') {
+            steps {
+                sh '''conda create --yes -n ${BUILD_TAG} python
+                      source activate ${BUILD_TAG} 
+                      pip install -r requirements.txt
+                    '''
+            }
+        }
          stage ("lint dockerfile") {
             //https://github.com/hadolint/hadolint/blob/master/docs/INTEGRATION.md
             agent {
@@ -9,7 +17,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'hadolint dockerfiles/* | tee -a hadolint_lint.txt'
+                sh 'hadolint Dockerfile | tee -a hadolint_lint.txt'
             }
             post {
                 always {
@@ -19,8 +27,7 @@ pipeline {
         }
         stage('Lint app') {
               steps {
-                //sh 'pylint --disable=R,C,W1203 app/**.py'
-                jenkins run python
+                sh 'pylint --disable=R,C,W1203 app/**.py'
               }
         }
         stage('Build') {
