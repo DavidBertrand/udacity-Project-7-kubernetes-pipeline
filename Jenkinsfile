@@ -1,10 +1,8 @@
 pipeline {
      agent any
      stages {
-        stage('Build environment') {
+        stage('install dependencies') {
             steps {
-                //sh '''pip install --upgrade pip &&\
-	            //    pip install -r requirements.txt
                 sh  '''python3 -m venv venv
                     . venv/bin/activate
                     make install
@@ -23,7 +21,6 @@ pipeline {
         stage('Lint app') {
             steps {
                 sh 'pylint --disable=R,C,W1203 app/**.py'
-
             }
         }
         stage ("lint dockerfile") {
@@ -44,8 +41,11 @@ pipeline {
         }
         stage('Build Docker image') {
             steps {
-                sh '''pip install --upgrade pip &&\
-	                pip install -r requirements.txt
+                sh ''' dockerpath="bertrand282/project7"
+                    # Build image and add a descriptive tag
+                    docker build --tag=$dockerpath .    
+                    # List docker images
+                    docker image ls
                     '''
             }
         }
