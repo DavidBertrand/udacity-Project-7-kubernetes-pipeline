@@ -52,6 +52,16 @@ pipeline {
                     '''
             }
         }
+        stage('Publish') {
+            steps {
+                withDockerRegistry([ credentialsId: "6544de7e-17a4-4576-9b9b-e86bc1e4f903", url: "" ]) {
+                    sh '''. venv/bin/activate
+                    dockerpath="bertrand282/project7"
+                    docker push $dockerpath
+                    '''
+                }
+            }
+        }
        
     }
 }
