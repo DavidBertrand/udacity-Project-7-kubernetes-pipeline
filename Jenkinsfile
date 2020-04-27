@@ -43,13 +43,15 @@ pipeline {
         }
         stage('Build Docker image') {
             steps {
-
-                app = docker.build("bertrand282/project7")
+                sh '''dockerpath="bertrand282/project7"
+                    # Build image and add a descriptive tag
+                    docker build --tag=$dockerpath .    
+                    '''
             }
         }
         stage('Publish') {
             steps {
-                docker.withRegistry([ credentialsId: "9ea219ef-a1ea-46f0-a6bd-183f9ab2fe7d", url: "" ]) {
+                withDockerRegistry([ credentialsId: "bertrand282", url: "" ]) {
                     sh 'docker push bertrand282/project7'
                 }
             }
